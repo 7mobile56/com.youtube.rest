@@ -21,10 +21,11 @@ import com.youtube.util.ToJSON;
 public class V1_inventory {
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	public String returnAllPcParts() throws Exception {
+	public Response returnAllPcParts() throws Exception {
 		PreparedStatement query = null;
 		Connection conn = null;
 		String resultString = null;
+		Response rb = null;
 		
 		try {
 			conn = MySQLmdrabbani.MySQLmdrabbaniConn().getConnection();
@@ -37,6 +38,7 @@ public class V1_inventory {
 			query.close();
 			
 			resultString = json.toString();
+			rb = Response.ok(resultString).build();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -46,6 +48,6 @@ public class V1_inventory {
 				conn.close();
 		}
 		
-		return resultString;
+		return rb;
 	}
 }
